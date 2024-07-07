@@ -1,7 +1,4 @@
 /* App.css */
-.pixel-font {
-  font-family: 'Bungee Spice', sans-serif;
-}
 
 .montserrat {
   font-family: 'Montserrat', sans-serif;
@@ -22,6 +19,8 @@
 .App {
   text-align: center;
   background-color: black;
+  font-family: 'Bungee Spice', sans-serif;
+
 }
 
 .App-logo {
