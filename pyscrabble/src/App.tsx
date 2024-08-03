@@ -7,18 +7,35 @@
   import SignUpPage from './views/registration/SignUpPage.tsx';
   import EnterCode from './components/layout/EnterCode.tsx';
   import GamePage from './views/user/GamePage.tsx';
+  import EasyQuestion from './views/user/questionPage/EasyQuestion.tsx';
+  import UserPage from './views/user/UserPage.tsx';
+  import ErrorPage from './404.tsx';
+  import { createBrowserRouter } from 'react-router-dom';
+  import Showdown from './views/user/ShowdownSelectionPage.tsx';
+  import WinnerPage from './views/user/WinnerPage.tsx';
 
+  const router = createBrowserRouter([
+    {
+      path: "*",
+      element: <ErrorPage />,
+    },
+  ]);
   function App() {
     return (
       <Router>
             <Header />
-            {/* <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/enter-code" element={<EnterCode />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/signup" element={<SignUpPage />} />
-            </Routes> */}
-            <GamePage/>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="*" element={<ErrorPage />} />
+              <Route path="/404" element={<ErrorPage />} />
+              <Route path="/userPage" element={<UserPage />} />
+              <Route path="/showdown" element={<Showdown />} />
+              <Route path="/game" element={<GamePage />} />
+              <Route path="/winner" element={<WinnerPage />} />
+            </Routes>
+            
       </Router>
         
 

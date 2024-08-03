@@ -1,57 +1,74 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import PlayerCard from '../../components/ui/PlayerCard.tsx';
+import CountdownTimer from '../../components/layout/CountdownTimer.tsx';
+import { Button } from '../../components/ui/Button.tsx';
+import {
+    Dialog,
+    DialogTrigger,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogClose,
+} from '../../components/ui/Dialog.tsx';
+import { useNavigate } from 'react-router-dom';
 
 interface Player {
     id: number;
     name: string;
     points: number;
     lives: number;
-  }
-  
-  const players: Player[] = [
-    { id: 1, name: 'PLAYER 1 (ME)', points: 1000, lives: 4 },
-    { id: 2, name: 'PLAYER 2', points: 600, lives: 4 },
-    { id: 3, name: 'PLAYER 3', points: 300, lives: 3 },
-    { id: 4, name: 'PLAYER 4', points: 100, lives: 3 },
-  ];
+}
+
+const players: Player[] = [
+    { id: 1, name: 'Alex', points: 10, lives: 4 },
+    { id: 2, name: 'John', points: 600, lives: 4 },
+    { id: 3, name: 'Bob', points: 300, lives: 3 },
+    { id: 4, name: 'David', points: 100, lives: 3 },
+];
 
 const GamePage = () => {
+    const navigate = useNavigate();
+    const [isStarted, setIsStarted] = useState<boolean>(false);
+    const [isTimeEnd, setIsTimeEnd] = useState<boolean>(false);
+    const sortedPlayers = players.sort((a, b) => b.points - a.points);
+    const handleTimeEnd = () => {
+        setIsTimeEnd(true);
+    }
     return (
-<div className="max-w-lg mx-auto font-sans">
-      <div className="flex justify-between items-center p-4 bg-gray-200">
-        <div className="text-lg font-bold">LOGO</div>
-        <div className="text-lg font-bold">ROOM CODE #PSJO</div>
-        <input
-          type="text"
-          placeholder="PLAYER_NAME"
-          className="border p-2"
-        />
-      </div>
-      <div className="flex justify-between p-4 bg-gray-300">
-        <div className="text-xl font-bold">MATCH ONGOING</div>
-        <div className="text-xl font-bold">TIME: 29:59</div>
-      </div>
-      <div className="p-4">
-        {players.map(player => (
-          <div
-            key={player.id}
-            className="flex justify-between items-center p-4 mb-2 bg-gray-100"
-          >
-            <div className="text-lg font-bold">{player.id}</div>
-            <div className="text-lg font-bold">{player.name}</div>
-            <div className="flex">
-              {Array.from({ length: player.lives }).map((_, i) => (
-                <span key={i} className="text-red-500">❤️</span>
-              ))}
-              {Array.from({ length: 4 - player.lives }).map((_, i) => (
-                <span key={i} className="text-gray-300">❤️</span>
-              ))}
+        <div className="max-w-3xl mx-auto h-screen p-6">
+            <div className="bg-slate-300 shadow-lg rounded-lg flex flex-col items-center overflow-hidden">
+                <div className="flex justify-between p-6 bg-gray-800 text-white w-full">
+                    <div className="text-xl font-semibold">MATCH</div>
+                    <CountdownTimer isStarted={isStarted} onTimeEnd={handleTimeEnd} />
+                </div>
+                <div className="p-6">
+                    {sortedPlayers.map((player) => (
+                        <PlayerCard
+                            ranking={null}
+                            playerName={player.name}
+                            points={player.points}
+                            lives={player.lives}
+                        />
+                    ))}
+                </div>
+                <Button size={'lg'} onClick={() => setIsStarted(true)} className={`w-full rounded-none ${isStarted ? 'bg-green-600 pointer-events-none' : 'bg-blue-700'}`}>
+                   {isStarted? 'Good Luck!' : 'Start Game'}     
+                </Button>
+                <Dialog open={isTimeEnd} onOpenChange={setIsTimeEnd}>
+                    <DialogTrigger asChild>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Congratulations!</DialogTitle>
+                        </DialogHeader>
+                        <div className="mt-4 text-center">
+                            <p>The timer has ended. Well done!</p>
+                        </div>
+                        <DialogClose onClick={() => navigate('/userPage')} className='bg-slate-700 p-3 text-white rounded-lg'>Back to Main menu</DialogClose>
+                    </DialogContent>
+                </Dialog>
             </div>
-            <div className="text-lg font-bold">{player.points} PTS</div>
-          </div>
-        ))}
-      </div>
-    </div>
+        </div>
     );
 }
 

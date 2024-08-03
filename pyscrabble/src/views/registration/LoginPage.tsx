@@ -1,18 +1,41 @@
 import React, { useState } from 'react';
-import { Input } from "../../components/ui/Input.tsx"
+import { Input } from "../../components/ui/Input.tsx";
 import { Button } from '../../components/ui/Button.tsx';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        email: "",
+        password: ""
+    });
+    const [error, setError] = useState(""); // State for error messages
     
+    const handleChange = (e: { target: { name: string; value: string; }; }) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
-        console.log('Email:', email);
-        console.log('Password:', password);
+        axios.post('http://localhost:3000/login', formData)
+            .then((response) => {
+                navigate('/userPage'); 
+            })
+            .catch((error) => {
+                // Check if the error response is an "incorrect email" error
+                if (error.response && error.response.status === 401) {
+                    setError("Incorrect email or password");
+                } else {
+                    setError("An unexpected error occurred");
+                }
+                console.error('There was an error for login!', error);
+            });
     };
-    
-    
+
     return (
         <section className="flex items-center justify-center min-h-[80vh]">
             <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
@@ -34,57 +57,60 @@ const LoginPage = () => {
                                 autoComplete="email"
                                 required
                                 className="relative block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={formData.email}
+                                onChange={handleChange}
                             />
                         </div>
                         <div className="mb-4">
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                            Password
-                        </label>
-                        <Input
-                            id="password"
-                            name="password"
-                            type="password"
-                            autoComplete="current-password"
-                            required
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                                Password
+                            </label>
+                            <Input
+                                id="password"
+                                name="password"
+                                type="password"
+                                autoComplete="current-password"
+                                required
+                                value={formData.password}
+                                onChange={handleChange}
+                            />
                         </div>
                     </div>
                     <div className="flex items-center justify-between">
                         <div className="flex items-center">
-                        <input
-                            id="remember-me"
-                            name="remember-me"
-                            type="checkbox"
-                            className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                        />
-                        <label htmlFor="remember-me" className="block ml-2 text-sm text-gray-900">
-                            Remember me
-                        </label>
+                            <input
+                                id="remember-me"
+                                name="remember-me"
+                                type="checkbox"
+                                className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                            />
+                            <label htmlFor="remember-me" className="block ml-2 text-sm text-gray-900">
+                                Remember me
+                            </label>
                         </div>
                         <div className="text-sm">
-                        <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                            Forgot your password?
-                        </a>
+                            <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                Forgot your password?
+                            </a>
                         </div>
                     </div>
+                    {error && (
+                        <div className="text-red-600 text-center mt-4">
+                            {error}
+                        </div>
+                    )}
                     <div>
-                    <Button
-                        type="submit"
-                        variant={'default'}
-                    >
-                        Login
-                    </Button>
+                        <Button
+                            type="submit"
+                            variant={'default'}
+                        >
+                            Login
+                        </Button>
                     </div>
                 </form>
             </div>
         </section>
-    )   
-
-
+    );
 }
 
 export default LoginPage;

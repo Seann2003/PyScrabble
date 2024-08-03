@@ -14,18 +14,17 @@ export default function EnterCode() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>ENTER CODE</Button>
+        <Button className='w-full'>ENTER CODE</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Enter your lobby code</DialogTitle>
         </DialogHeader>
-        <div className="flex w-full i">
+        <div className="flex w-full">
             <Input
               id="lobby-code"
               placeholder="#AISP"
               className="col-span-3 w-full"
-
             />
         </div>
         <DialogFooter>
