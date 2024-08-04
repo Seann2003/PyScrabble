@@ -5,14 +5,15 @@
   import HomePage from './views/homepage/WebsitePage.tsx';
   import LoginPage from './views/registration/LoginPage.tsx';
   import SignUpPage from './views/registration/SignUpPage.tsx';
-  import EnterCode from './components/layout/EnterCode.tsx';
   import GamePage from './views/user/GamePage.tsx';
-  import EasyQuestion from './views/user/questionPage/EasyQuestion.tsx';
   import UserPage from './views/user/UserPage.tsx';
   import ErrorPage from './404.tsx';
   import { createBrowserRouter } from 'react-router-dom';
   import Showdown from './views/user/ShowdownSelectionPage.tsx';
   import WinnerPage from './views/user/WinnerPage.tsx';
+  import QrScanner from './components/layout/QRScanner.tsx';
+  import EasyQuestionPage from './views/user/questionPage/EasyQuestion.tsx';
+  import RulesPage from './views/homepage/RulesPage.tsx';
 
   const router = createBrowserRouter([
     {
@@ -34,8 +35,10 @@
               <Route path="/showdown" element={<Showdown />} />
               <Route path="/game" element={<GamePage />} />
               <Route path="/winner" element={<WinnerPage />} />
+              <Route path="/rules" element={<RulesPage />} />
+              <Route path="/scan-qr" element={<QrScanner />} />
+              <Route path="/easyQuestion" element={<EasyQuestionPage />} />
             </Routes>
-            
       </Router>
         
 

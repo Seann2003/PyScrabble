@@ -21,7 +21,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({ bgColor, textColor, title, logo
                 alt={logoDesc} 
                 className="w-1/4 h-auto mr-4 md:w-1/6 lg:w-1/8" 
             />
-            <span className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl ml-2 md:ml-4 lg:ml-6 xl:ml-8">{title}</span>
+            <span className="text-wrap text-xl md:text-2xl lg:text-3xl xl:text-4xl ml-2 md:ml-4 lg:ml-6 xl:ml-8">{title}</span>
         </button>
     );
 }

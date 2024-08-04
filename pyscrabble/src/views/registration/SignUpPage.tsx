@@ -21,7 +21,7 @@ const SignUpPage = () => {
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        axios.post('http://localhost:3000/signup', formData)
+        axios.post('http://localhost:3000/auth/signup', formData)
             .then((response) => {
                 console.log(response.data);
                 // Handle successful signup (e.g., redirect, show success message)

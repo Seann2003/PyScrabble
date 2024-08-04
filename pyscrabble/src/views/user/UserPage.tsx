@@ -5,6 +5,7 @@ import HomeLogo from '../../assets/buttonLogo/home-logo.svg'
 import LeaderboardLogo from '../../assets/buttonLogo/leaderboard-logo.svg'
 import RulesLogo from '../../assets/buttonLogo/rules-logo.svg'
 import { useNavigate } from 'react-router-dom';
+import KirbyAnimation from '../../assets/kirby-gif.gif'
 
 const UserPage = () => {
     const navigate = useNavigate();
@@ -12,7 +13,9 @@ const UserPage = () => {
         navigate('/showdown');
     }
     return (
-        <div className="montserrat flex flex-col items-end justify-center min-h-screen bg-gray-900">
+        <div className="montserrat flex flex-col lg:items-center items-end lg:flex-row lg:justify-between min-h-screen bg-gray-900">
+            <img src = {KirbyAnimation} alt = "Kirby Animation" className='w-1/4 h-auto' />
+
             <div className="flex flex-col gap-y-4">
                 <MenuButton 
                     bgColor='bg-[#670F45]' 

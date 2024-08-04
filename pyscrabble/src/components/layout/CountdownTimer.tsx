@@ -6,7 +6,7 @@ interface CountdownTimerProps {
 }
 
 const CountdownTimer: React.FC<CountdownTimerProps> = ({ isStarted, onTimeEnd }) => {
-  const [time, setTime] = useState<number>(2); // 10 minutes in seconds
+  const [time, setTime] = useState<number>(100); // 10 minutes in seconds
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ isStarted, onTimeEnd })
     }
   }, [time]);
 
-  const formatTime = (seconds: number): string => {
+    const formatTime = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes.toString();
@@ -43,7 +43,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ isStarted, onTimeEnd })
   return (
     <>
       {formatTime(time)}
-      <audio ref={audioRef} src={require('../../assets/countdown.mp3')} autoPlay />
+      <audio ref={audioRef} src={require('../../assets/countdown.mp3')}/>
     </>
   );
 };

@@ -10,6 +10,7 @@ import {
     DialogTitle,
     DialogClose,
 } from '../../components/ui/Dialog.tsx';
+import PointsDialog from '../../components/ui/PointsDialog.tsx';
 import { useNavigate } from 'react-router-dom';
 
 interface Player {
@@ -30,7 +31,6 @@ const GamePage = () => {
     const navigate = useNavigate();
     const [isStarted, setIsStarted] = useState<boolean>(false);
     const [isTimeEnd, setIsTimeEnd] = useState<boolean>(false);
-    const sortedPlayers = players.sort((a, b) => b.points - a.points);
     const handleTimeEnd = () => {
         setIsTimeEnd(true);
     }
@@ -42,8 +42,9 @@ const GamePage = () => {
                     <CountdownTimer isStarted={isStarted} onTimeEnd={handleTimeEnd} />
                 </div>
                 <div className="p-6">
-                    {sortedPlayers.map((player) => (
+                    {players.map((player, key) => (
                         <PlayerCard
+                            key={key}
                             ranking={null}
                             playerName={player.name}
                             points={player.points}
@@ -64,9 +65,10 @@ const GamePage = () => {
                         <div className="mt-4 text-center">
                             <p>The timer has ended. Well done!</p>
                         </div>
-                        <DialogClose onClick={() => navigate('/userPage')} className='bg-slate-700 p-3 text-white rounded-lg'>Back to Main menu</DialogClose>
+                        <DialogClose onClick={() => navigate('/winner')} className='bg-slate-700 p-3 text-white rounded-lg'>Winners Dashboard</DialogClose>
                     </DialogContent>
                 </Dialog>
+                <PointsDialog />
             </div>
         </div>
     );

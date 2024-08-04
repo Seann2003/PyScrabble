@@ -21,7 +21,7 @@ const LoginPage = () => {
 
     const handleSubmit = (event: { preventDefault: () => void; }) => {
         event.preventDefault();
-        axios.post('http://localhost:3000/login', formData)
+        axios.post('http://localhost:3000/auth/login', formData)
             .then((response) => {
                 navigate('/userPage'); 
             })

@@ -1,5 +1,7 @@
 import React from "react";
 import OptionCards from "../../../components/ui/OptionCards.tsx";
+import QRCode from 'qrcode.react';
+
 
 const python_quiz_questions = [
     {
@@ -113,8 +115,14 @@ const python_quiz_questions = [
 ]
 
 const EasyQuestion = () =>{
+    const EasyQuestionPageUrl = "http://localhost:3001/easyQuestion";
+
+
     return(
         <>
+            <QRCode value={EasyQuestionPageUrl} size={256} />
+
+
             <section className="flex justify-center gap-x-4 items-center w-full">
                 {python_quiz_questions.filter(question => question.difficulty === 1)
                 .map((question, index) => (
