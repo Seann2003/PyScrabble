@@ -4,8 +4,10 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const corsMiddleware = require('./middleware/corsMiddleware');
 const authRoutes = require('./routes/authRoutes');
-const routes = require('./routes/routes');
+const normalRoutes = require('./routes/routes');
 const questionRoutes = require('./routes/questionRoutes');
+const cookieParser = require('cookie-parser');
+
 
 dotenv.config();
 
@@ -15,10 +17,12 @@ app.use(corsMiddleware);
 app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
+
 
 app.use('/auth', authRoutes);
-// app.use('/api', routes);
-app.use('/api', questionRoutes);
+app.use('/api', normalRoutes);
+app.use('/api/questions', questionRoutes);
 
 
 app.get('/', (req, res) => {

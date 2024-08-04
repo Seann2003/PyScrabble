@@ -11,7 +11,7 @@ const InsaneQuestion = () =>{
     useEffect(() => {
         const getRandomQuestion = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/insane');
+                const response = await fetch('http://localhost:3000/api/questions/insane');
                 const data = await response.json();
                 const randomQuestion = data[Math.floor(Math.random() * data.length)];
                 setRandomQuestion(randomQuestion);
@@ -25,7 +25,7 @@ const InsaneQuestion = () =>{
 
     const handleOptionClick = (option: string) => {
         if(option === randomQuestion.correct_answer){
-            setTimeout(() => navigate(-1), 500);
+            setTimeout(() => navigate("/game"), 500);
         } else {
             alert("Wrong Answer");
         }

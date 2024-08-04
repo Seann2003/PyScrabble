@@ -48,7 +48,7 @@ const UserPage = () => {
                     title='RULES' 
                     logoPath={RulesLogo} 
                     logoDesc='Rules logo'  
-                    onClick = {handleShowdown} 
+                    onClick = {()=>{navigate('/rules')}} 
                 />
             </div>
         </div>

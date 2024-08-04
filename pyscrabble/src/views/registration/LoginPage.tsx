@@ -21,11 +21,16 @@ const LoginPage = () => {
     };
 
     const handleSubmit = (event: { preventDefault: () => void; }) => {
-        event.preventDefault();
-        axios.post('http://localhost:3000/auth/login', formData)
+        event.preventDefault(); 
+        axios.post('http://localhost:3000/auth/login', formData, { withCredentials: true })
             .then((response) => {
-                localStorage.setItem('token', response.data.token);
-                navigate('/userPage'); 
+                const userType = response.data.user.type;
+                console.log(userType);
+                if (userType === 2) {
+                    navigate('/adminPage');
+                } else {
+                    navigate('/userPage');
+                }
             })
             .catch((error) => {
                 // Check if the error response is an "incorrect email" error

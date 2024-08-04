@@ -4,14 +4,21 @@ import { Button } from '../ui/Button.tsx';
 import { Link, useNavigate } from 'react-router-dom';
 import EnterCode from './EnterCode.tsx';
 import { IoMdMenu } from "react-icons/io";
+import axios from 'axios';
 import { IoMdClose } from "react-icons/io";
 
 const AuthenticatedHeader: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate()
     const handleLogout = () =>{
-        localStorage.removeItem('token');
-        navigate('/');
+        axios.post('http://localhost:3000/auth/logout', {}, { withCredentials: true })
+            .then((response) => {
+                console.log(response.data.message);
+                navigate('/'); // Redirect to the login page
+            })
+            .catch((error) => {
+                console.error('There was an error logging out!', error);
+            });
     }
 
     const toggleMenu = () => {

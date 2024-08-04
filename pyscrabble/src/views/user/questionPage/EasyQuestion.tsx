@@ -11,9 +11,8 @@ const EasyQuestion = () =>{
     useEffect(() => {
         const getRandomQuestion = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/easy');
+                const response = await fetch('http://localhost:3000/api/questions/easy');
                 const data = await response.json();
-                // Assuming the API returns an array of questions and you pick the first one
                 const randomQuestion = data[Math.floor(Math.random() * data.length)];
                 setRandomQuestion(randomQuestion);
             } catch (error) {
@@ -26,7 +25,7 @@ const EasyQuestion = () =>{
 
     const handleOptionClick = (option: string) => {
         if(option === randomQuestion.correct_answer){
-            setTimeout(() => navigate(-1), 500);
+            setTimeout(() => navigate("/game"), 500);
         } else {
             alert("Wrong Answer");
         }

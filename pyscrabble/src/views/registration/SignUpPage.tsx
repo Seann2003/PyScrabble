@@ -11,7 +11,7 @@ const SignUpPage = () => {
         email: '',
         password: ''
     });
-
+    const [error, setError] = useState(""); // State for error messages
     const handleChange = (e: { target: { name: any; value: any; }; }) => {
         setFormData({
             ...formData,
@@ -23,11 +23,16 @@ const SignUpPage = () => {
         e.preventDefault();
         axios.post('http://localhost:3000/auth/signup', formData)
             .then((response) => {
-                localStorage.setItem('token', response.data.token);
                 navigate('/login');
             })
             .catch((error) => {
-                console.error('There was an error signing up!', error);
+                                // Check if the error response is an "incorrect email" error
+                if (error.response && error.response.status === 400) {
+                    setError("User or email already exists");
+                } else {
+                    setError("An unexpected error occurred");
+                }
+                console.error('There was an error for login!', error);
             });
     };
 
@@ -94,6 +99,11 @@ const SignUpPage = () => {
                             Sign in
                         </Button>
                     </div>
+                    {error && (
+                        <div className="text-red-600 text-center mt-4">
+                            {error}
+                        </div>
+                    )}
                 </form>
             </div>
         </section>

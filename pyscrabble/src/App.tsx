@@ -1,4 +1,5 @@
   import './App.css';
+  import axios from 'axios';
   import React, { useState, useEffect } from 'react';
   import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
   import Header from './components/layout/Header.tsx';
@@ -27,33 +28,26 @@
     },
   ]);
 
-  function getLocalStorage() {
-    return localStorage.getItem('token') || '';
-  }
+  function App() { 
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  function App() {
-    const [profile, setProfile] = useState(getLocalStorage());
-    console.log(profile);
     useEffect(() => {
-      function updateProfile() {
-        setProfile(getLocalStorage());
-      }
-  
-      // Add event listener for storage changes
-      window.addEventListener('storage', updateProfile);
-  
-      // Remove event listener on cleanup
-      return () => window.removeEventListener('storage', updateProfile);
-    }, []);
-  
-    // Update profile state when the component mounts
-    useEffect(() => {
-      setProfile(getLocalStorage());
-    }, [profile]);
-  
+      const checkAuth = async () => {
+          try {
+              const response = await axios.get('http://localhost:3000/api/protected', { withCredentials: true });
+              if (response.status === 200) {
+                  setIsAuthenticated(true);
+              }
+          } catch (error) {
+              setIsAuthenticated(false);
+          }
+      };
+      checkAuth();
+  }, []);
+
     return (
       <Router>
-        {profile ? <AuthenticatedHeader /> : <Header />}
+        {isAuthenticated ? <AuthenticatedHeader /> : <Header />}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
