@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
     const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -23,6 +24,7 @@ const LoginPage = () => {
         event.preventDefault();
         axios.post('http://localhost:3000/auth/login', formData)
             .then((response) => {
+                localStorage.setItem('token', response.data.token);
                 navigate('/userPage'); 
             })
             .catch((error) => {

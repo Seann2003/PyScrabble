@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const corsMiddleware = require('./middleware/corsMiddleware');
 const authRoutes = require('./routes/authRoutes');
+const routes = require('./routes/routes');
+const questionRoutes = require('./routes/questionRoutes');
 
 dotenv.config();
 
@@ -15,6 +17,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use('/auth', authRoutes);
+// app.use('/api', routes);
+app.use('/api', questionRoutes);
+
 
 app.get('/', (req, res) => {
     res.send("Hello, I am working with Supabase <3");

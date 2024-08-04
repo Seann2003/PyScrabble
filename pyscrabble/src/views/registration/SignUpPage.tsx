@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { Input } from "../../components/ui/Input.tsx"
 import axios from 'axios';
 import { Button } from '../../components/ui/Button.tsx';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpPage = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: '',
         email: '',
         password: ''
     });
-
-    console.log(formData);
 
     const handleChange = (e: { target: { name: any; value: any; }; }) => {
         setFormData({
@@ -23,8 +23,8 @@ const SignUpPage = () => {
         e.preventDefault();
         axios.post('http://localhost:3000/auth/signup', formData)
             .then((response) => {
-                console.log(response.data);
-                // Handle successful signup (e.g., redirect, show success message)
+                localStorage.setItem('token', response.data.token);
+                navigate('/login');
             })
             .catch((error) => {
                 console.error('There was an error signing up!', error);

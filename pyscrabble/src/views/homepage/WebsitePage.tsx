@@ -11,7 +11,7 @@ const HomePage = () => {
                 <div className='flex flex-col gap-6 text-center lg:text-left text-[#B0ACF6] lg:w-1/2'>
                     <span className="pixel-font text-[2.5rem] rainbow-text font-extrabold">PYSCRABBLE SHOWDOWN!</span>
                     <span className='robotto text-[1.875rem] font-bold'>Challenge your friends to a Python quiz with a Scrabble twist</span>
-                    <Button className='w-52 h-20 mx-auto lg:mx-0'>SIGN UP NOW!</Button>
+                    <Button onClick={() => navigate('/signup')} className='w-52 h-20 mx-auto lg:mx-0'>SIGN UP NOW!</Button>
                 </div>
                 <img src={scrabble} alt="Scrabble" className='w-full lg:w-2/5 h-auto lg:h-auto' />
             </div>

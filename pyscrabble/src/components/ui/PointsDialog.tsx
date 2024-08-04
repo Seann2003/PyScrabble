@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogClose, DialogOverlay } from '../ui/Dialog.tsx'; // Assuming you have these components already created
+import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogClose, DialogOverlay } from './Dialog.tsx'; // Assuming you have these components already created
 import { FaPlus, FaMinus } from "react-icons/fa";
 
 

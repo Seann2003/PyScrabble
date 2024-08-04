@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from "../../components/ui/Button.tsx"
+import { Button } from "../ui/Button.tsx"
 import {
   Dialog,
   DialogContent,
@@ -7,8 +7,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../components/ui/Dialog.tsx"
-import { Input } from "../../components/ui/Input.tsx"
+} from "../ui/Dialog.tsx"
+import { Input } from "../ui/Input.tsx"
 
 export default function EnterCode() {
   return (
