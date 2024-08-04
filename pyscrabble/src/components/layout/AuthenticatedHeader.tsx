@@ -45,9 +45,7 @@ const AuthenticatedHeader: React.FC = () => {
             {isOpen && (
                 <div className='absolute top-12 left-0 right-0 bg-[#282646] p-4 flex flex-col items-center md:hidden'>
                     <EnterCode />
-                    <Link to="/logout" className='w-full'>
                         <Button onClick={handleLogout} className='w-full mt-2'>LOGOUT</Button>
-                    </Link>
                 </div>
             )}
         </div>

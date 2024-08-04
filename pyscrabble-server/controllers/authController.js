@@ -28,9 +28,9 @@ const login = async (req, res) => {
         let token = jwt.sign({ id: user.id, name: user.user_name }, process.env.JWT_SECRET, { expiresIn: '10h' });
         res.cookie('Token', token, {
             httpOnly: true, // Ensures the cookie is only accessible by the web server
-            secure: process.env.NODE_ENV === 'production', // Set to true if using HTTPS
+            secure: process.env.NODE_ENV === 'production', 
             maxAge: 36000000, // Cookie expiration time (e.g., 10 hours)
-            sameSite: 'None',
+            sameSite: 'None', // Apparently it only works when I set this to 'None' for my side
             path: '/',
             secure: true
         });

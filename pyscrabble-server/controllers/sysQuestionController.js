@@ -1,24 +1,13 @@
-const express = require('express');
-const router = express.Router();
+const supabase = require('../config/supabase');
 const { authenticateJwtToken } = require('../middleware/authenticateJwtToken');
-const { adminOnly } = require('../middleware/adminOnly');
-const supabase = require('../supabaseClient');
-
-// Middleware to ensure the user is an admin
-const adminOnly = (req, res, next) => {
-    if (req.user && req.user.isAdmin) {
-        next();
-    } else {
-        res.status(403).json({ message: 'Forbidden: Admins only' });
-    }
-};
 
 // Create a question
 const createQuestion = async (req, res) => {
     const { question_title, options, correct_answer, difficulty } = req.body;
+    
     try {
         const { data, error } = await supabase
-            .from('questions')
+            .from('question')
             .insert([{ question_title, options, correct_answer, difficulty }]);
 
         if (error) throw error;
@@ -29,11 +18,12 @@ const createQuestion = async (req, res) => {
     }
 };
 
+
 // Read all questions
 const getAllQuestions = async (req, res) => {
     try {
         const { data, error } = await supabase
-            .from('questions')
+            .from('question')
             .select('*');
 
         if (error) throw error;
@@ -50,7 +40,7 @@ const updateQuestion = async (req, res) => {
     const { question_title, options, correct_answer, difficulty } = req.body;
     try {
         const { data, error } = await supabase
-            .from('questions')
+            .from('question')
             .update({ question_title, options, correct_answer, difficulty })
             .eq('id', id);
 
@@ -67,7 +57,7 @@ const deleteQuestion = async (req, res) => {
     const { id } = req.params;
     try {
         const { data, error } = await supabase
-            .from('questions')
+            .from('question')
             .delete()
             .eq('id', id);
 

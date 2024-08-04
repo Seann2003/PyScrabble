@@ -23,7 +23,6 @@ const getMediumQuestion = async (req, res) => {
     } else {
         res.status(200).json(data);
     }   
-   
 }
 
 const getHardQuestion = async (req, res) => {

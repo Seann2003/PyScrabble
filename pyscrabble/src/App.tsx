@@ -16,10 +16,10 @@
   import QrScanner from './components/layout/QRScanner.tsx';
   import EasyQuestionPage from './views/user/questionPage/EasyQuestion.tsx';
   import RulesPage from './views/homepage/RulesPage.tsx';
-  import AuthenticatedRoute from './routes/authenticatedRoute.tsx';
   import MediumQuestionPage from './views/user/questionPage/MediumQuestion.tsx';
   import HardQuestionPage from './views/user/questionPage/HardQuestion.tsx';
   import InsaneQuestionPage from './views/user/questionPage/InsaneQuestion.tsx';
+  import AdminPage from './views/admin/AdminPage.tsx';
 
   const router = createBrowserRouter([
     {
@@ -43,7 +43,7 @@
           }
       };
       checkAuth();
-  }, []);
+    }, []);
 
     return (
       <Router>
@@ -63,6 +63,7 @@
           <Route path="/hardQuestion" element={<HardQuestionPage />} />
           <Route path="/insaneQuestion" element={<InsaneQuestionPage />} />
           <Route path="*" element={<ErrorPage />} />
+          <Route path="/adminPage" element={<AdminPage />} />
         </Routes>
       </Router>
     );
