@@ -14,12 +14,11 @@ const Header: React.FC = () => {
     };
 
     return (
-        <div className='px-4 py-3 text-white pixel-font bg-[#282646] flex justify-between items-center'>
+        <header className='px-4 py-3 text-white pixel-font bg-[#282646] flex justify-between items-center'>
             <Link to="/">
                 <img src={logo} alt="Logo" className="h-9 md:h-10" />
             </Link>
             <div className='hidden md:flex gap-5 items-center'>
-                <EnterCode />
                 <Link to="/login">
                     <Button>LOG IN</Button>
                 </Link>
@@ -38,7 +37,6 @@ const Header: React.FC = () => {
             </div>
             {isOpen && (
                 <div className='absolute top-12 left-0 right-0 bg-[#282646] p-4 flex flex-col items-center md:hidden'>
-                    <EnterCode />
                     <Link to="/login" className='w-full'>
                         <Button className='w-full mt-2'>LOG IN</Button>
                     </Link>
@@ -47,7 +45,7 @@ const Header: React.FC = () => {
                     </Link>
                 </div>
             )}
-        </div>
+        </header>
     );
 };
 

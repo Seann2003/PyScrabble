@@ -23,11 +23,9 @@ const WinnerPage: React.FC = () => {
     useEffect(() => {
         const fetchPlayers = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/players/${lobbyCode}`);
-                console.log(response)
+                const response = await axios.get(`http://localhost:3000/api/players/${lobbyCode}`,{withCredentials: true});
                 const playersData = response.data;
                 setPlayers(playersData);
-                console.log(playersData)
             } catch (error) {
                 console.error("Error fetching players:", error);
             }

@@ -133,16 +133,15 @@ const joinLobby = async (req, res) => {
         if (lobbyError || !lobby) {
             return res.status(404).json({ error: 'Lobby not found' });
         }
-
         // Check if the user is already in the lobby
         const { data: existingPlayer, error: playerError } = await supabase
-            .from('lobby')
+            .from('players')
             .select('*')
-            .eq('id', lobby.id)
+            .eq('lobby_id', lobby.id)
             .eq('user_id', user_id)
             .single();
 
-            const {data: findUser, error: userError} = await supabase
+        const {data: findUser, error: userError} = await supabase
             .from('user')
             .select('*')
             .eq('id', user_id)
@@ -158,42 +157,39 @@ const joinLobby = async (req, res) => {
         } 
         
         if (existingPlayer) {
-                return res.status(400).json({ error: 'You are already in this lobby' });
-            }
-    
+            return res.status(200).json({message: "Welcome back!"})
+        }else{
             // Add the user to the lobby_players table
             const { data: newPlayer, error: insertError } = await supabase
                 .from('players')
                 .insert({ lobby_id: lobby.id, user_id: user_id });
-    
-            const {data: players, error: playersError} = await supabase
-                .from('players')
-                .select('*')
-                .eq('lobby_id', lobby.id);
 
             if (insertError) {
                 console.error('Error joining lobby:', insertError);
                 return res.status(500).json({ error: 'Failed to join lobby' });
             }
-    
-            res.status(200).json({
-                message: 'Successfully joined lobby',
-                user: {
-                    id: user_id,
-                    name: findUser.user_name
-                },
-                lobby: {
-                    id: lobby.id,
-                    created_at: lobby.created_at
-                }
-            });
+        }
+
+        
+
+        res.status(200).json({
+            message: 'Successfully joined lobby',
+            user: {
+                id: user_id,
+                name: findUser.user_name
+            },
+            lobby: {
+                id: lobby.id,
+                created_at: lobby.created_at
+            }
+        });
         } catch (err) {
             console.error('Server error:', err);
             res.status(500).json({ error: 'Internal server error' });
         }
     }
 
-    
+
 
 module.exports = {
     createLobby,

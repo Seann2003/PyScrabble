@@ -16,18 +16,20 @@
 
   function App() { 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+
     const checkAuth = async () => {
       try {
           const response = await axios.get('http://localhost:3000/api/protected', { withCredentials: true });
           if (response.status === 200) {
+              localStorage.setItem('isAuthenticated', 'true');
               setIsAuthenticated(true);
           }
-      } catch (error) {
+      } catch (error) { 
+          localStorage.setItem('isAuthenticated', 'false');
           setIsAuthenticated(false);
       }
     };
     useEffect(() => {
-
       checkAuth();
     }, []);
 

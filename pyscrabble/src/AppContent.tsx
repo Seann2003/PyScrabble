@@ -9,7 +9,6 @@ import UserPage from './views/user/UserPage.tsx';
 import ErrorPage from './404.tsx';
 import Showdown from './views/user/ShowdownSelectionPage.tsx';
 import WinnerPage from './views/user/WinnerPage.tsx';
-import QrScanner from './components/layout/QRScanner.tsx';
 import EasyQuestionPage from './views/user/questionPage/EasyQuestion.tsx';
 import RulesPage from './views/homepage/RulesPage.tsx';
 import MediumQuestionPage from './views/user/questionPage/MediumQuestion.tsx';
@@ -17,6 +16,7 @@ import HardQuestionPage from './views/user/questionPage/HardQuestion.tsx';
 import InsaneQuestionPage from './views/user/questionPage/InsaneQuestion.tsx';
 import AdminPage from './views/admin/AdminPage.tsx';
 import HomePage from './views/homepage/WebsitePage.tsx';
+import AuthenticatedRoute from './routes/authenticatedRoute.tsx';
 
 interface AppContentProps {
   isAuthenticated: boolean;
@@ -25,30 +25,34 @@ interface AppContentProps {
 }
 
 const AppContent: React.FC<AppContentProps> = ({ isAuthenticated, setIsAuthenticated, checkAuthStatus }) => {
-  return (
-    <>
-      {isAuthenticated ? <AuthenticatedHeader setIsAuthenticated={setIsAuthenticated} /> : <Header />}
-        <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage setIsAuthenticated={setIsAuthenticated} checkAuthStatus={checkAuthStatus} />} />
-            {isAuthenticated && (
-                <>
-                    <Route path="/signup" element={<SignUpPage />} />
+    return (
+        <>
+        {isAuthenticated ? <AuthenticatedHeader setIsAuthenticated={setIsAuthenticated} /> : <Header />}
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage checkAuthStatus={checkAuthStatus} />} />
+                <Route path="/rules" element={<RulesPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
+                <Route element={<AuthenticatedRoute adminOnly={false} />}>
                     <Route path="/userPage" element={<UserPage />} />
                     <Route path="/showdown" element={<Showdown />} />
                     <Route path="/game" element={<GamePage />} />
                     <Route path="/winner" element={<WinnerPage />} />
-                    <Route path="/rules" element={<RulesPage />} />
-                    <Route path="/scan-qr" element={<QrScanner />} />
                     <Route path="/easyQuestion" element={<EasyQuestionPage />} />
                     <Route path="/mediumQuestion" element={<MediumQuestionPage />} />
                     <Route path="/hardQuestion" element={<HardQuestionPage />} />
                     <Route path="/insaneQuestion" element={<InsaneQuestionPage />} />
                     <Route path="/lobby" element={<GamePage />} />
-                </>
-            )}
-            <Route path="*" element={<ErrorPage />} />
-            <Route path="/adminPage" element={<AdminPage />} />
+                </Route>
+                <Route path="*" element={<ErrorPage />} />
+                <Route
+                    path="/adminPage"
+                    element={
+                    <AuthenticatedRoute adminOnly={true} />}>
+                    <Route path="/adminPage" element={<AdminPage />} />
+                </Route>
+                    
+                
         </Routes>
     </>
   );

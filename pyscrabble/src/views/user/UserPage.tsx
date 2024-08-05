@@ -6,6 +6,7 @@ import LeaderboardLogo from '../../assets/buttonLogo/leaderboard-logo.svg'
 import RulesLogo from '../../assets/buttonLogo/rules-logo.svg'
 import { useNavigate } from 'react-router-dom';
 import KirbyAnimation from '../../assets/kirby-gif.gif'
+import KirbyFlyingAnimation from '../../assets/kirby-flying.gif'
 
 const UserPage = () => {
     const navigate = useNavigate();
@@ -14,7 +15,8 @@ const UserPage = () => {
     }
     return (
         <div className="montserrat flex flex-col lg:items-center items-end lg:flex-row lg:justify-between min-h-screen bg-gray-900">
-            <img src = {KirbyAnimation} alt = "Kirby Animation" className='w-1/4 h-auto' />
+            <img src = {KirbyAnimation} alt = "Kirby Animation" className='w-1/5 h-auto' />
+            <img src = {KirbyFlyingAnimation} alt = "Kirby Flying Animation" className='w-1/5 h-auto' />
 
             <div className="flex flex-col gap-y-4">
                 <MenuButton 

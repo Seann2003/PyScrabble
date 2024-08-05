@@ -17,7 +17,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ checkAuthStatus }) => {
         password: ""
     });
     const [error, setError] = useState(""); // State for error messages
-    
+
     const handleChange = (e: { target: { name: string; value: string; }; }) => {
         setFormData({
             ...formData,
@@ -30,6 +30,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ checkAuthStatus }) => {
         axios.post('http://localhost:3000/auth/login', formData, { withCredentials: true })
             .then(async (response) => {
                 const userType = response.data.user.type;
+                localStorage.setItem('userType', userType.toString());
                 await checkAuthStatus();
                 if (userType === 2) {
                     navigate('/adminPage');

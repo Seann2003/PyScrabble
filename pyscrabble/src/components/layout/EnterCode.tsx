@@ -12,17 +12,21 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Input } from "../ui/Input.tsx"
 
+
+
 export default function EnterCode() {
   const [lobbyCode, setLobbyCode] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:3000/apiRoom/checkRoom`, {lobby_code: lobbyCode}, { withCredentials: true });
+      const response = await axios.post(`http://localhost:3000/apiRoom/join/${lobbyCode}`, {}, { withCredentials: true });
       if (response.status === 200) {   
-        
+        setIsOpen(false);
         navigate(`/lobby/?code=${lobbyCode}`);
+        alert(response.data.message)
       }else{
         alert("Incorrect Lobby Code")
       }
@@ -32,9 +36,8 @@ export default function EnterCode() {
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className='w-full'>ENTER CODE</Button>
       </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit}>

@@ -17,8 +17,9 @@ const AuthenticatedHeader: React.FC<AuthenticatedHeaderProps> = ({ setIsAuthenti
     const handleLogout = () =>{
         axios.post('http://localhost:3000/auth/logout', {}, { withCredentials: true })
             .then((response) => {
-                console.log(response.data.message);
                 setIsAuthenticated(false);
+                localStorage.setItem('isAuthenticated', 'false');
+                alert("You have been logged out!")
                 navigate('/'); // Redirect to the login page
             })
             .catch((error) => {
@@ -30,11 +31,13 @@ const AuthenticatedHeader: React.FC<AuthenticatedHeaderProps> = ({ setIsAuthenti
         setIsOpen(!isOpen);
     };
     return (
-        <div className='px-4 py-3 text-white pixel-font bg-[#282646] flex justify-between items-center'>
+        <header className='px-4 py-3 text-white pixel-font bg-[#282646]  flex justify-between items-center'>
             <Link to="/">
                 <img src={logo} alt="Logo" className="h-9 md:h-10" />
             </Link>
             <div className='hidden md:flex gap-5 items-center'>
+                <Button className='w-full' onClick={() => setIsOpen(true)}>ENTER CODE</Button>
+
                 <EnterCode />
                 <Button onClick={handleLogout}>LOGOUT</Button>
             </div>
@@ -53,7 +56,7 @@ const AuthenticatedHeader: React.FC<AuthenticatedHeaderProps> = ({ setIsAuthenti
                         <Button onClick={handleLogout} className='w-full mt-2'>LOGOUT</Button>
                 </div>
             )}
-        </div>
+        </header>
     )
 
 

@@ -102,6 +102,7 @@ const AdminPage = () => {
                     value={form.question_title}
                     onChange={handleChange}
                     placeholder="Question Title"
+                    className='-z-10'
                     required
                 />
                 <label htmlFor="options">Options</label>

@@ -15,12 +15,12 @@ interface PlayerCardProps{
 const PlayerCard: React.FC<PlayerCardProps> = ({ ranking, playerName, points, lives, cardSize, isActive}) => {
     return (
         <>
-            <div className={`flex items-center p-4 mb-2 bg-[rgb(22,20,64)]  ${isActive ? 'bg-yellow-200': 'bg-white'} rounded-md  text-white ${cardSize}`}>
+            <div className={`flex items-center p-4 mb-2 bg-[rgb(22,20,64)]  ${isActive ? 'bg-slate-400': 'bg-white'} rounded-md  text-white ${cardSize}`}>
                 {ranking != null? (
                     <div className="lg:text-3xl text-xl lg:w-32 md:w-24 w-12 font-bold ">{ranking}</div>
                 ) : ''}
                 <div className={` ${ranking!=null ? 'w-full justify-between' : ''} flex`}>
-                    <div className={`lg:text-lg text-sm lg:w-32 w-16 font-bold ${ranking!=null ? 'lg:text-3xl text-xl' : ''}`}>
+                    <div className={`lg:text-lg text-sm lg:w-32 w-16 text-ellipsis text-wrap overflow-hidden font-bold ${ranking!=null ? 'lg:text-3xl text-xl' : ''}`}>
                         {playerName}
                     </div>
                     {lives != null?  (

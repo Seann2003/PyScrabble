@@ -1,5 +1,6 @@
 import React from "react";
-import { Button } from "../../components/ui/Button";
+import { Button } from "../../components/ui/Button.tsx";
+import { useNavigate } from "react-router-dom";
 
 const RulesPage = () => {
 
@@ -8,9 +9,12 @@ const RulesPage = () => {
         fontWeight: "bold",
         color: "white",
     };
+    const navigate = useNavigate();
 
     return (
         <div className="flex flex-col  gap-10">
+            <Button onClick={() => navigate(-1)} className='bg-slate-700 p-3 text-2xl md:text-3xl font-medium lg:text-4xl hover:bg-slate-800 text-white self-start mt-10 w-36 h-auto rounded-none' size={'lg'}> Back</Button>
+
             <div className="text-5xl font-bold my-10 text-blue-900">Game Rules</div>
             <li style={liStyle}>
                 A QR code sticker is pasted under the Scrabble board for users to scan
