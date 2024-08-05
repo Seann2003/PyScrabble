@@ -7,13 +7,18 @@ import { IoMdMenu } from "react-icons/io";
 import axios from 'axios';
 import { IoMdClose } from "react-icons/io";
 
-const AuthenticatedHeader: React.FC = () => {
+interface AuthenticatedHeaderProps {
+    setIsAuthenticated: (isAuthenticated: boolean) => void;
+}
+
+const AuthenticatedHeader: React.FC<AuthenticatedHeaderProps> = ({ setIsAuthenticated }) => {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate()
     const handleLogout = () =>{
         axios.post('http://localhost:3000/auth/logout', {}, { withCredentials: true })
             .then((response) => {
                 console.log(response.data.message);
+                setIsAuthenticated(false);
                 navigate('/'); // Redirect to the login page
             })
             .catch((error) => {

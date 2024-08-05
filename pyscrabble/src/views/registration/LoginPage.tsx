@@ -4,7 +4,12 @@ import { Button } from '../../components/ui/Button.tsx';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
+interface LoginPageProps {
+
+    checkAuthStatus: () => Promise<void>;
+}
+
+const LoginPage: React.FC<LoginPageProps> = ({ checkAuthStatus }) => {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -20,12 +25,12 @@ const LoginPage = () => {
         });
     };
 
-    const handleSubmit = (event: { preventDefault: () => void; }) => {
+    const handleSubmit = async (event: { preventDefault: () => void; }) => {
         event.preventDefault(); 
         axios.post('http://localhost:3000/auth/login', formData, { withCredentials: true })
-            .then((response) => {
+            .then(async (response) => {
                 const userType = response.data.user.type;
-                console.log(userType);
+                await checkAuthStatus();
                 if (userType === 2) {
                     navigate('/adminPage');
                 } else {

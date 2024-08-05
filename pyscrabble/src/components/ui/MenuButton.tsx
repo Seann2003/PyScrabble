@@ -6,7 +6,7 @@ interface MenuButtonProps {
     title: string,
     logoPath: string,
     logoDesc: string
-    onClick: () => void
+    onClick?: () => void,
 }
 
 const MenuButton: React.FC<MenuButtonProps> = ({ bgColor, textColor, title, logoPath, logoDesc, onClick }) => {

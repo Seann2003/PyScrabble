@@ -7,7 +7,10 @@ const authRoutes = require('./routes/authRoutes');
 const normalRoutes = require('./routes/routes');
 const questionRoutes = require('./routes/questionRoutes');
 const cookieParser = require('cookie-parser');
+const lobbyRoutes = require('./routes/lobbyRoutes');
 const sysQuestionRoutes = require('./routes/sysQuestionRoutes');
+const playersRoutes = require('./routes/playersRoutes');
+const matchHistoryRoutes = require('./routes/matchHistoryRoutes');
 
 dotenv.config();
 
@@ -23,6 +26,9 @@ app.use('/auth', authRoutes);
 app.use('/api', normalRoutes);
 app.use('/api/questions', questionRoutes);
 app.use('/api/sysQuestions', sysQuestionRoutes);
+app.use('/apiRoom', lobbyRoutes);
+app.use('/api/players', playersRoutes);
+app.use('/api/matchHistory', matchHistoryRoutes);
 
 app.get('/', (req, res) => {
     res.send("Hello, I am working with Supabase <3");

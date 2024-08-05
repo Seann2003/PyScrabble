@@ -1,5 +1,4 @@
 const supabase = require('../config/supabase');
-const { authenticateJwtToken } = require('../middleware/authenticateJwtToken');
 
 // Create a question
 const createQuestion = async (req, res) => {

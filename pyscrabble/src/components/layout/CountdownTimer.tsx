@@ -6,7 +6,7 @@ interface CountdownTimerProps {
 }
 
 const CountdownTimer: React.FC<CountdownTimerProps> = ({ isStarted, onTimeEnd }) => {
-  const [time, setTime] = useState<number>(100); // 10 minutes in seconds
+  const [time, setTime] = useState<number>(20); // 10 minutes in seconds
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
