@@ -11,10 +11,12 @@ import {
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Input } from "../ui/Input.tsx"
+import JoinGameLogo from '../../assets/buttonLogo/joingame-logo.svg'
+import MenuButton from '../ui/MenuButton.tsx';
 
 
 
-export default function EnterCode() {
+export default function EnterCodeShowdown() {
   const [lobbyCode, setLobbyCode] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -38,8 +40,15 @@ export default function EnterCode() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className='w-full' onClick={() => setIsOpen(true)}>ENTER CODE</Button>
-      </DialogTrigger>
+            <MenuButton 
+                bgColor='bg-[#BB5C17]' 
+                textColor='text-[#F7BD93]' 
+                title='JOIN GAME!' 
+                logoPath={JoinGameLogo} 
+                logoDesc='Join Game logo'
+                onClick={() => setIsOpen(true)}  
+            />      
+        </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import OptionCards from "../../../components/ui/OptionCards.tsx";
 import QRCode from 'qrcode.react';
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const InsaneQuestion = () =>{
     const [randomQuestion, setRandomQuestion] = useState<any>(null);
@@ -11,8 +12,8 @@ const InsaneQuestion = () =>{
     useEffect(() => {
         const getRandomQuestion = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/questions/insane');
-                const data = await response.json();
+                const response = await axios.get('http://localhost:3000/api/questions/insane',{withCredentials: true}) ;
+                const data = response.data;
                 const randomQuestion = data[Math.floor(Math.random() * data.length)];
                 setRandomQuestion(randomQuestion);
             } catch (error) {
@@ -25,7 +26,8 @@ const InsaneQuestion = () =>{
 
     const handleOptionClick = (option: string) => {
         if(option === randomQuestion.correct_answer){
-            setTimeout(() => navigate("/game"), 500);
+            alert("Correct Answer!!!");
+            setTimeout(() => navigate(-1), 500);
         } else {
             alert("Wrong Answer");
         }
@@ -37,7 +39,7 @@ const InsaneQuestion = () =>{
         <>
             <QRCode value={InsaneQuestionPageUrl} size={256} />
             <section className="flex justify-center gap-x-4 items-center w-full">
-                {randomQuestion && (
+                {randomQuestion && randomQuestion.options && Array.isArray(randomQuestion.options) ?(
                     <div className="flex justify-center items-center flex-col">
                         <div className="bg-red-500 text-white self-end mt-10 text-3xl pr-20 pl-5 py-2">Insane</div>
                         <div className="flex justify-center text-center items-start pt-32 text-white rounded-lg max-w-[900px] h-[300px] text-4xl">{randomQuestion.question_title}</div>
@@ -49,7 +51,8 @@ const InsaneQuestion = () =>{
                             })}
                         </div>
                     </div>
-
+                ):(
+                    <div>Loading...</div>
                 )}
             </section>
         </>

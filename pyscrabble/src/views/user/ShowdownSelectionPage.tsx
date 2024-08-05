@@ -1,6 +1,6 @@
 import React from 'react';
 import MenuButton from '../../components/ui/MenuButton.tsx';
-import JoinGameLogo from '../../assets/buttonLogo/joingame-logo.svg'
+import EnterCodeShowdown from '../../components/layout/EnterCodeShowdown.tsx';
 import CreateRoomLogo from '../../assets/buttonLogo/createroom-logo.svg'
 import { Button } from '../../components/ui/Button.tsx';
 import { useNavigate } from 'react-router-dom';
@@ -17,14 +17,7 @@ const ShowdownSelectionPage = () => {
                 <img src = {KirbyAnimation} alt = "Kirby Animation" className='w-1/5 h-auto' />
                 <img src = {KirbyFlyingAnimation} alt = "Kirby Flying Animation" className='w-1/5 h-auto' />
                 <div className="flex flex-col gap-y-4">
-                    <MenuButton 
-                        bgColor='bg-[#BB5C17]' 
-                        textColor='text-[#F7BD93]' 
-                        title='JOIN GAME!' 
-                        logoPath={JoinGameLogo} 
-                        logoDesc='Join Game logo'
-                        onClick={() => navigate('/game')}  
-                    />
+                    <EnterCodeShowdown/>
                     <CreateRoomDialog button={
                         <MenuButton 
                             bgColor='bg-[#952525]' 

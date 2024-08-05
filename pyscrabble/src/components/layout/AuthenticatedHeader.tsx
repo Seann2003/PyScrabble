@@ -36,8 +36,6 @@ const AuthenticatedHeader: React.FC<AuthenticatedHeaderProps> = ({ setIsAuthenti
                 <img src={logo} alt="Logo" className="h-9 md:h-10" />
             </Link>
             <div className='hidden md:flex gap-5 items-center'>
-                <Button className='w-full' onClick={() => setIsOpen(true)}>ENTER CODE</Button>
-
                 <EnterCode />
                 <Button onClick={handleLogout}>LOGOUT</Button>
             </div>

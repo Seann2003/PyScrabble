@@ -13,6 +13,10 @@ const UserPage = () => {
     const handleShowdown = () => {
         navigate('/showdown');
     }
+
+    const showMatchHistory = () => {
+        navigate('/matchHistory');
+    }
     return (
         <div className="montserrat flex flex-col lg:items-center items-end lg:flex-row lg:justify-between min-h-screen bg-gray-900">
             <img src = {KirbyAnimation} alt = "Kirby Animation" className='w-1/5 h-auto' />
@@ -30,19 +34,10 @@ const UserPage = () => {
                 <MenuButton 
                     bgColor='bg-[#171e69]' 
                     textColor='text-[#466CCE]' 
-                    title='HOME' 
+                    title='MATCH HISTORY' 
                     logoPath={HomeLogo} 
-                    logoDesc='Home logo'  
-                    onClick = {handleShowdown} 
-                />
-                <MenuButton 
-                    bgColor='bg-[#103F23]' 
-                    textColor='text-[#24C163]' 
-                    title='LEADERBOARD' 
-                    logoPath={LeaderboardLogo} 
-                    logoDesc='Leaderboard logo'  
-                    onClick = {handleShowdown} 
-
+                    logoDesc='Match History logo'  
+                    onClick = {showMatchHistory} 
                 />
                 <MenuButton 
                     bgColor='bg-[#320F60]' 
