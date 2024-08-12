@@ -32,7 +32,7 @@ const AdminPage = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        // If statement for dealing with options
+        // If statement for dealing with the options data
         if (name.startsWith('option')) {
             const index = parseInt(name.replace('option','')) - 1;
 
@@ -102,7 +102,7 @@ const AdminPage = () => {
                     value={form.question_title}
                     onChange={handleChange}
                     placeholder="Question Title"
-                    className='-z-10'
+                    className='z-10'
                     required
                 />
                 <label htmlFor="options">Options</label>

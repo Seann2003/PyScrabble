@@ -18,6 +18,7 @@ import AdminPage from './views/admin/AdminPage.tsx';
 import HomePage from './views/homepage/WebsitePage.tsx';
 import AuthenticatedRoute from './routes/authenticatedRoute.tsx';
 import UserHistory from './views/user/matchHistory/UserHistory.tsx';
+import QrCodePage from './views/QrCodePage.tsx';
 
 interface AppContentProps {
   isAuthenticated: boolean;
@@ -44,6 +45,7 @@ const AppContent: React.FC<AppContentProps> = ({ isAuthenticated, setIsAuthentic
                     <Route path="/hardQuestion" element={<HardQuestionPage />} />
                     <Route path="/insaneQuestion" element={<InsaneQuestionPage />} />
                     <Route path="/lobby" element={<GamePage />} />
+                    <Route path="/qrCode" element={<QrCodePage />} />
                     <Route path="/matchHistory" element={<UserHistory />} />
                 </Route>
                 <Route path="*" element={<ErrorPage />} />

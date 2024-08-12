@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import OptionCards from "../../../components/ui/OptionCards.tsx";
-import QRCode from 'qrcode.react';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const InsaneQuestion = () =>{
     const [randomQuestion, setRandomQuestion] = useState<any>(null);
-    const InsaneQuestionPageUrl = "http://localhost:3001/insaneQuestion";
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -37,7 +35,6 @@ const InsaneQuestion = () =>{
 
     return(
         <>
-            <QRCode value={InsaneQuestionPageUrl} size={256} />
             <section className="flex justify-center gap-x-4 items-center w-full">
                 {randomQuestion && randomQuestion.options && Array.isArray(randomQuestion.options) ?(
                     <div className="flex justify-center items-center flex-col">

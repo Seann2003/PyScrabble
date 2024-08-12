@@ -1,6 +1,5 @@
 const supabase = require('../config/supabase')
 
-
 const createLobby = async (req, res) => {
     const { lobby_code } = req.body;
     const user_id = req.user.id; 
@@ -36,7 +35,6 @@ const createLobby = async (req, res) => {
             console.error('Error creating lobby:', lobbyError);
             return res.status(500).json({ error: 'Error creating lobby' });
         }
-
         // Insert into players table
         const { data: playerData, error: playerError } = await supabase
             .from('players')
@@ -46,13 +44,13 @@ const createLobby = async (req, res) => {
             })
             .select()
             .single();
-            if (playerError) {
-                console.error('Error adding player to lobby:', playerError);
-                return res.status(500).json({ error: 'Error adding player to lobby' });
-            }
+        if (playerError) {
+            console.error('Error adding player to lobby:', playerError);
+            return res.status(500).json({ error: 'Error adding player to lobby' });
+        }
     
-            // Fetch player's score and name from user table
-            const { data: userData, error: userError } = await supabase
+            // Fetch player's name from user table
+        const { data: userData, error: userError } = await supabase
             .from('user')
             .select('user_name')
             .eq('id', user_id);
@@ -79,9 +77,11 @@ const createLobby = async (req, res) => {
 
         // Combine all the data
         const responseData = {
-            lobby: lobbyData,
+            lobby: {
+                id: lobbyData.id,
+                code: lobbyData.lobby_code
+            },
             player: {
-                ...playerData,
                 name: userData[0].user_name,
                 score: pointsData && pointsData.length > 0 ? pointsData[0].final_points : 0
             }
@@ -94,29 +94,6 @@ const createLobby = async (req, res) => {
     }
 }
 
-
-
-const checkRoom = async (req, res) => {
-    const { lobby_code } = req.body;
-
-    try {
-        const { data, error } = await supabase
-            .from('lobby')
-            .select('*')
-            .eq('lobby_code', lobby_code)
-            .single();
-        
-        if (error) {
-            console.error('Supabase error:', error);
-            return res.status(404).json({ error: 'Lobby not found' });
-        }
-
-        res.status(200).json({ data });
-    } catch (err) {
-        console.error('Server error:', err);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-}
 
 const joinLobby = async (req, res) => {
     const { lobby_code } = req.params;
@@ -141,20 +118,15 @@ const joinLobby = async (req, res) => {
             .eq('user_id', user_id)
             .single();
 
-        const {data: findUser, error: userError} = await supabase
+        const { data: userData, error: userError } = await supabase
             .from('user')
-            .select('*')
-            .eq('id', user_id)
-            .single();
+            .select('user_name')
+            .eq('id', user_id);
 
-        
         if (userError) {
             console.error('Error finding user:', userError);
             return res.status(500).json({ error: 'Error checking user registration' });
         }
-        if (!findUser) {
-            return res.status(400).json({ error: 'You are not registered' });
-        } 
         
         if (existingPlayer) {
             return res.status(200).json({message: "Welcome back!"})
@@ -170,29 +142,26 @@ const joinLobby = async (req, res) => {
             }
         }
 
-        
-
         res.status(200).json({
             message: 'Successfully joined lobby',
             user: {
                 id: user_id,
-                name: findUser.user_name
+                name: userData[0].user_name
             },
             lobby: {
                 id: lobby.id,
-                created_at: lobby.created_at
+                code: lobby.lobby_code
             }
         });
-        } catch (err) {
-            console.error('Server error:', err);
-            res.status(500).json({ error: 'Internal server error' });
-        }
+    } catch (err) {
+        console.error('Server error:', err);
+        res.status(500).json({ error: 'Internal server error' });
     }
+}
 
 
 
 module.exports = {
     createLobby,
-    checkRoom,
     joinLobby
 }

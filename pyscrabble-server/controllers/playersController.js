@@ -67,7 +67,10 @@ const fetchPlayers = async (req, res) => {
             }
         }));
 
-        res.json(processedPlayers);
+        res.json({
+            lobbyId: lobbyId,
+            players: processedPlayers
+        });
     } catch (error) {
         console.error('Error fetching data:', error);
         res.status(500).json({ error: error.message });

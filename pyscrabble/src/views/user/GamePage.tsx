@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PlayerCard from '../../components/ui/PlayerCard.tsx';
-import CountdownTimer from '../../components/layout/CountdownTimer.tsx';
 import { Button } from '../../components/ui/Button.tsx';
-import supabase from '../../config/supabaseClient';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import QrScanner from '../../components/layout/QRScanner.tsx';
 import {
@@ -23,7 +21,6 @@ interface Player {
 
 const GamePage = () => {
     const navigate = useNavigate();
-    const [isStarted, setIsStarted] = useState<boolean>(false);
     const [isTimeEnd, setIsTimeEnd] = useState<boolean>(false);
     const [lobbyId, setLobbyId] = useState<number>(0);
     const [userId, setUserId] = useState<number>(0);
@@ -35,9 +32,7 @@ const GamePage = () => {
     const [code, setCode] = useState<string | null>(null);
     const gameCode = searchParams.get('code');
 
-    const handleTimeEnd = () => {
-        setIsTimeEnd(true);
-    };
+
 
     useEffect(() => {
         if (!gameCode) {
@@ -56,8 +51,10 @@ const GamePage = () => {
     const fetchPlayers = async () => {
         try {
             const response = await axios.get(`http://localhost:3000/api/players/game/${code}`,{withCredentials: true});
-            setPlayers(response.data);
-            const currentUser = response.data.find(player => !player.isBot);
+            const players = response.data.players;
+            setPlayers(players);
+            setLobbyId(response.data.lobbyId);  
+            const currentUser = players.find(player => !player.isBot);
             if (currentUser) {
                 setUserId(currentUser.userId);
             }
@@ -117,18 +114,17 @@ const GamePage = () => {
             <div className="bg-slate-300 shadow-lg rounded-lg flex flex-col items-center overflow-hidden">
                 <div className="flex justify-between p-6 bg-gray-800 text-white w-full">
                     <div className="text-xl font-semibold">MATCH</div>
-                    <CountdownTimer isStarted={isStarted} onTimeEnd={handleTimeEnd} />
                 </div>
 
                 <div className="p-6 w-full">
                     {players.map((player, index) => (
-                        <PlayerCard
-                            key={player.id}
-                            ranking={null}
-                            playerName={player.name}
-                            points={player.points}
-                            lives={4}
-                            isActive={index === currentPlayerIndex}
+                    <PlayerCard
+                        key={player.id}
+                        ranking={null}
+                        playerName={player.name}
+                        points={player.points}
+                        lives={4}
+                        isActive={index === currentPlayerIndex}
                         />
                     ))}
                 </div>
@@ -139,12 +135,13 @@ const GamePage = () => {
                 >
                     Add Player
                 </Button>
+
                 <Button
                     size={'lg'}
-                    onClick={() => setIsStarted(true)}
-                    className={`w-full rounded-none ${isStarted ? 'bg-green-600 pointer-events-none' : 'bg-blue-700'}`}
+                    onClick={() => setIsTimeEnd(true)}
+                    className={`w-full rounded-none bg-blue-700`}
                 >
-                    {isStarted ? 'Good Luck!' : 'Start Game'}
+                    {isTimeEnd ? 'End Round' : 'End Round'}
                 </Button>
                 <Dialog open={isTimeEnd} onOpenChange={setIsTimeEnd}>
                     <DialogContent>
@@ -152,7 +149,7 @@ const GamePage = () => {
                             <DialogTitle>Congratulations!</DialogTitle>
                         </DialogHeader>
                         <div className="mt-4 text-center">
-                            <p>The timer has ended. Well done!</p>
+                            <p>The game has ended. Well done!</p>
                         </div>
                         <DialogClose onClick={async (e) => {
                             e.preventDefault();
@@ -183,7 +180,8 @@ const GamePage = () => {
                         </div>
                     </DialogContent>
                 </Dialog>
-                {isStarted && <PointsDialog onSubmitPoints={handleSubmitPoints} />}
+                <PointsDialog onSubmitPoints={handleSubmitPoints} />
+                <Button onClick={() => navigate(`/qrCode`)}>QR Code List To Download</Button>
             </div>
             <QrScanner />
         </div>

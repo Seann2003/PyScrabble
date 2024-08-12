@@ -16,44 +16,18 @@ const RulesPage = () => {
             <Button onClick={() => navigate(-1)} className='bg-slate-700 p-3 text-2xl md:text-3xl font-medium lg:text-4xl hover:bg-slate-800 text-white self-start mt-10 w-36 h-auto rounded-none' size={'lg'}> Back</Button>
 
             <div className="text-5xl font-bold my-10 text-blue-900">Game Rules</div>
+
             <li style={liStyle}>
-                A QR code sticker is pasted under the Scrabble board for users to scan
-                using their phone's default QR scanner application. After scanning the QR code, they will be
-                automatically brought into the game lobby. They also have the option to join the lobby using
-                the room code at the top middle of the web page.
+            While playing the Scrabble game, the players can add the total points they have acquired by selecting the “Add Points” button. After submitting the points, the gray box will proceed to the next player, and they can add points for themselves. The order of the player’s turn starts from the top to the bottom, and it will repeat until the players want to end the round.
             </li>
             <li style={liStyle}>
-                The game will start once all players have joined the lobby.
+            When it comes to the player’s turn, the player can select the “Add Points” window and a popup window will appear. The player must select the amount of points they have acquired. They can click “Submit” button to proceed to the next person.
             </li>
             <li style={liStyle}>
-                When it comes to the player’s turn, a popup window will appear, and the player must type in
-                the total points after placing the word on the Scrabble board. If the player’s word is placed on
-                any special box multipliers, they are required to select the special box multipliers.
+            Based on the special box multiplier the previous player hit, the next player has to use the built in QR code scanner in the website to scan the QR code. The order of the list is arranged based on the difficulty level of the questions, where “2 letter” being the easiest while “3 word” being the hardest.  They will be brought into the question page, and the player is required to pick a correct answer out of the three options.
             </li>
             <li style={liStyle}>
-                Based on the special box multiplier the previous player hit, if any of the players in the lobby
-                wish to negate the special box's effect, they can scan the QR code which will bring them to
-                different questions with distinct difficulty. The order of the list is
-                arranged based on the difficulty level of the questions, where “2 letter” being the easiest
-                while “3 word” being the hardest.
-            </li>
-            <li style={liStyle}>
-                If the player wants to negate the special box multiplier the other player got, they can scan the
-                QR code using their phone’s default QR code scanner. They will be brought into the question
-                page, and they have three minutes to choose the correct answer.
-            </li>
-            <li style={liStyle}>
-                If the player managed to provide the correct solution, the previous player must resubmit their
-                points without the special box's multiplier effect.
-            </li>
-            <li style={liStyle}>
-                If the player provided the incorrect solution, this player would lose a life point, and the special
-                box multiplier is not negated.
-            </li>
-            <li style={liStyle}>
-                In the scenario where the other three players died or the 30 minutes play time is out, the game
-                will be officially ended, and the page will first display the final winner of the game. After this, a new page will display the scoreboard containing the final ranking
-                and points for each player in the lobby.
+            Once all of the players are done with playing Scrabble, they can select the “End Game” button located in the lobby page, and the leaderboard page will appear after the game has ended.
             </li>
         </div>
     )

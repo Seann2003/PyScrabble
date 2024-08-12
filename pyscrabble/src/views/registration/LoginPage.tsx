@@ -29,6 +29,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ checkAuthStatus }) => {
         event.preventDefault(); 
         axios.post('http://localhost:3000/auth/login', formData, { withCredentials: true })
             .then(async (response) => {
+                alert("Login successful!");
                 const userType = response.data.user.type;
                 localStorage.setItem('userType', userType.toString());
                 await checkAuthStatus();
@@ -38,14 +39,8 @@ const LoginPage: React.FC<LoginPageProps> = ({ checkAuthStatus }) => {
                     navigate('/userPage');
                 }
             })
-            .catch((error) => {
-                // Check if the error response is an "incorrect email" error
-                if (error.response && error.response.status === 401) {
-                    setError("Incorrect email or password");
-                } else {
-                    setError("An unexpected error occurred");
-                }
-                console.error('There was an error for login!', error);
+            .catch((err) => {
+                setError("Incorrect email/password");
             });
     };
 
@@ -57,7 +52,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ checkAuthStatus }) => {
                         Log in to your account
                     </h2>
                 </div>
-                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+                <form className="flex flex-col mt-8 space-y-6" onSubmit={handleSubmit}>
                     <div className="rounded-md shadow-sm">
                         <div className="mb-4">
                             <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
@@ -89,37 +84,19 @@ const LoginPage: React.FC<LoginPageProps> = ({ checkAuthStatus }) => {
                             />
                         </div>
                     </div>
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                            <input
-                                id="remember-me"
-                                name="remember-me"
-                                type="checkbox"
-                                className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                            />
-                            <label htmlFor="remember-me" className="block ml-2 text-sm text-gray-900">
-                                Remember me
-                            </label>
-                        </div>
-                        <div className="text-sm">
-                            <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                Forgot your password?
-                            </a>
-                        </div>
-                    </div>
+                    
                     {error && (
                         <div className="text-red-600 text-center mt-4">
                             {error}
                         </div>
                     )}
-                    <div>
-                        <Button
-                            type="submit"
-                            variant={'default'}
-                        >
-                            Login
-                        </Button>
-                    </div>
+                    
+                    <Button
+                        type="submit"
+                        variant={'default'}
+                    >
+                        Login
+                    </Button>
                 </form>
             </div>
         </section>

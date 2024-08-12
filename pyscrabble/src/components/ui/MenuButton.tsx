@@ -5,7 +5,7 @@ interface MenuButtonProps {
     textColor: string,
     title: string,
     logoPath: string,
-    logoDesc: string
+    logoDesc: string,
     onClick?: () => void,
 }
 

@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 
 const QrScanner = () => {
+    const [scanning, setScanning] = useState(true);
+
     useEffect(() => {
         const scanner = new Html5QrcodeScanner(
             "reader",
@@ -9,28 +11,28 @@ const QrScanner = () => {
             false
         );
 
-        const onScanError = (decodedText) => {
-            // Handle the decoded text, for example, redirect to another page
-        };
         const onScanSuccess = (decodedText: string) => {
-            // Handle the decoded text, for example, redirect to another page
             window.location.href = decodedText;
         };
 
-        scanner.render(onScanSuccess, onScanError);
+        if (scanning) {
+            scanner.render(onScanSuccess, console.error);
+        } else {
+            scanner.clear().catch(console.error);
+        }
 
-        // Clean up on unmount
         return () => {
-            scanner.clear().catch((error) => {
-                console.error('Failed to clear html5QrcodeScanner', error);
-            });
+            scanner.clear().catch(console.error);
         };
-    }, []);
+    }, [scanning]);
 
     return (
         <div className='text-white'>
             <h1>Scan QR Code</h1>
             <div id="reader" style={{ width: "100%" }}></div>
+            <button onClick={() => setScanning(!scanning)}>
+                {scanning ? 'Stop Scanning' : 'Start Scanning'}
+            </button>
         </div>
     );
 };

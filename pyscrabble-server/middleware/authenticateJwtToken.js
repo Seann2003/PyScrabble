@@ -16,7 +16,6 @@ const authenticateJwtToken = (req, res, next) => {
 }
 
 const checkAuthStatus = (req, res) => {
-
     
     if (!token) {
       return res.status(401).json({ isAuthenticated: false });

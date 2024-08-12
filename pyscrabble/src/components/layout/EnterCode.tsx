@@ -22,7 +22,7 @@ export default function EnterCode() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:3000/apiRoom/join/${lobbyCode}`, {}, { withCredentials: true });
+      const response = await axios.post(`http://localhost:3000/api/room/join/${lobbyCode}`, {}, { withCredentials: true });
       if (response.status === 200) {   
         setIsOpen(false);
         navigate(`/lobby/?code=${lobbyCode}`);

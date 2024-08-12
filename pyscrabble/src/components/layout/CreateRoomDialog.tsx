@@ -16,7 +16,7 @@ const CreateRoomDialog: React.FC<CreateRoomDialogProps> = ({button}) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLobbyName(lobbyName);
-        axios.post('http://localhost:3000/apiRoom/createLobby', {
+        axios.post('http://localhost:3000/api/room/createLobby', {
             lobby_code: lobbyName
         }, { withCredentials: true })
         .then((response) => {

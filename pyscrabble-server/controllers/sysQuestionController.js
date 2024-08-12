@@ -40,7 +40,7 @@ const updateQuestion = async (req, res) => {
     try {
         const { data, error } = await supabase
             .from('question')
-            .update({ question_title, options, correct_answer, difficulty })
+            .update({ question_title, options, correct_answer, difficulty, updated_at: new Date() })
             .eq('id', id);
 
         if (error) throw error;

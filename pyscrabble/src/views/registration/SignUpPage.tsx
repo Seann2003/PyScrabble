@@ -19,21 +19,23 @@ const SignUpPage = () => {
         });
     };
 
-    const handleSubmit = (e: { preventDefault: () => void; }) => {
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        axios.post('http://localhost:3000/auth/signup', formData)
-            .then((response) => {
-                navigate('/login');
-            })
-            .catch((error) => {
-                                // Check if the error response is an "incorrect email" error
-                if (error.response && error.response.status === 400) {
-                    setError("User or email already exists");
+        try {
+            const response = await axios.post('http://localhost:3000/auth/signup', formData);
+            alert('Account has been created successfully!');
+            navigate('/login');
+        } catch (error) {
+            if (error.response) {
+                if (error.response.status === 400) {
+                    setError(error.response.data.error);
                 } else {
-                    setError("An unexpected error occurred");
+                    setError('An unknown error occurred.');
                 }
-                console.error('There was an error for login!', error);
-            });
+            } else {
+                setError('Network error, please try again.');
+            }
+        }
     };
 
     return (
@@ -83,7 +85,7 @@ const SignUpPage = () => {
                                 id="password"
                                 name="password"
                                 type="password"
-                                placeholder='Example: abc123'
+                                placeholder='Must be at least 8 characters'
                                 autoComplete="current-password"
                                 required
                                 value={formData.password}

@@ -10,13 +10,9 @@ import KirbyFlyingAnimation from '../../assets/kirby-flying.gif'
 
 const UserPage = () => {
     const navigate = useNavigate();
-    const handleShowdown = () => {
-        navigate('/showdown');
-    }
-
-    const showMatchHistory = () => {
-        navigate('/matchHistory');
-    }
+    const handleButtonClick = (route: string) => {
+        navigate(route);
+    };
     return (
         <div className="montserrat flex flex-col lg:items-center items-end lg:flex-row lg:justify-between min-h-screen bg-gray-900">
             <img src = {KirbyAnimation} alt = "Kirby Animation" className='w-1/5 h-auto' />
@@ -29,7 +25,7 @@ const UserPage = () => {
                     title='SHOWDOWN!' 
                     logoPath={ShowdownLogo} 
                     logoDesc='Showdown logo' 
-                    onClick = {handleShowdown} 
+                    onClick={() => handleButtonClick('/showdown')}
                 />
                 <MenuButton 
                     bgColor='bg-[#171e69]' 
@@ -37,7 +33,7 @@ const UserPage = () => {
                     title='MATCH HISTORY' 
                     logoPath={HomeLogo} 
                     logoDesc='Match History logo'  
-                    onClick = {showMatchHistory} 
+                    onClick={() => handleButtonClick('/matchHistory')}
                 />
                 <MenuButton 
                     bgColor='bg-[#320F60]' 
@@ -45,7 +41,7 @@ const UserPage = () => {
                     title='RULES' 
                     logoPath={RulesLogo} 
                     logoDesc='Rules logo'  
-                    onClick = {()=>{navigate('/rules')}} 
+                    onClick={() => handleButtonClick('/rules')}
                 />
             </div>
         </div>

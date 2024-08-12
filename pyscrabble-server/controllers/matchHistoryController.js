@@ -40,12 +40,6 @@ const getMatchHistory = async (req, res) => {
     res.status(200).json(matchHistoryWithPoints);
 }
 
-const getMatchHistoryById = async (req, res) => {
-    const {data, error} = await supabase
-        .from('match_history')
-        .select('*')
-        .eq('id', req.params.id)
-}
 
 const addMatchHistory = async (req, res) => {
     const {user_id, lobby_id} = req.body;
@@ -61,6 +55,5 @@ const addMatchHistory = async (req, res) => {
 
 module.exports = {
     getMatchHistory,
-    getMatchHistoryById,
     addMatchHistory
 }
